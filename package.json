@@ -1,0 +1,23 @@
+{
+  "name": "gulp-vue-single-file-component",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nfplee/gulp-vue-single-file-component.git"
+  },
+  "keywords": [
+    "gulp",
+    "vue",
+    "single-file-component"
+  ],
+  "author": "Lee Timmins",
+  "dependencies": {
+    "gulp-util": "^3.0.8",
+    "less": "^3.0.4",
+    "node-sass": "^4.9.0",
+    "parse5": "^5.0.0",
+    "through2": "^2.0.3"
+  }
+}
