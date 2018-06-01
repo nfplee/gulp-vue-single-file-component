@@ -23,7 +23,7 @@ gulp.task('vue', function() {
 ## Example
 
 ```bash
-npm install babel-core babel-preset-env browser-sync gulp gulp-babel gulp-rename gulp-vue-single-file-component  --save-dev
+npm install babel-core babel-preset-env browser-sync gulp gulp-babel gulp-rename gulp-vue-single-file-component --save-dev
 ```
 
 `gulpfile.js`:
