@@ -63,8 +63,8 @@ module.exports = function(options) {
                     });
                 } else if (lang == 'sass' || lang == 'scss') {
                     var options = {
-                        outputStyle: "compressed",
-                        indentedSyntax: lang == "sass",
+                        outputStyle: 'compressed',
+                        indentedSyntax: lang == 'sass',
                     };
 
                     if (href) {
@@ -78,7 +78,7 @@ module.exports = function(options) {
                     tagContent['style'] = '{ content: \'' + result.css.toString().replace('\n', '') + '\' }';
                 } else {
                     if (href) {
-                        tagContent['style'] = '{ url: "' + href + '" }';
+                        tagContent['style'] = '{ url: \'' + href + '\' }';
                     } else {
                         tagContent['style'] = '{ content: \'' + minify(style) + '\' }';
                     }
@@ -108,12 +108,12 @@ module.exports = function(options) {
         // Build up the file content
         var content = tagContent['script'];
 
-        // Add a beforeCreate event to load the CSS (if one is specified and not one already)
+        // Add a beforeCreate event to load the CSS (if applicable)
         if (tagContent['style'] && !content.includes('beforeCreate()')) {
             content = content.replace(/(export default [^{]*{)/, '$1\n		beforeCreate() {\n			' + settings.loadCssMethod + '('+ tagContent['style'] + ');\n		},');
         }
 
-        // Add the template (if one is specified and not one already)
+        // Add the template (if applicable)
         if (tagContent['template'] && !content.includes('template:')) {
             content = content.replace(/(export default [^{]*{)/, '$1\n		template: \'' + tagContent['template'] + '\',');
         }

@@ -10,14 +10,15 @@
   "keywords": [
     "gulp",
     "vue",
-    "single-file-component"
+    "single-file-component",
+    "amd"
   ],
   "author": "Lee Timmins",
   "dependencies": {
     "gulp-util": "^3.0.8",
     "less": "^3.0.4",
     "node-sass": "^4.9.0",
-    "parse5": "^5.0.0",
+    "parse5": "^2.1.5",
     "through2": "^2.0.3"
   }
 }
