@@ -26,8 +26,8 @@ function minify(input) {
 
 module.exports = function(options) {
     var defaults = {
-        debug: false, // Debug mode
-        loadCssMethod: 'require.loadCss' // Load css method name
+        debug: false,
+        loadCssMethod: 'require.loadCss'
     };
 
     var settings = Object.assign({}, defaults, options);
