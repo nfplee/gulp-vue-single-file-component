@@ -29,7 +29,7 @@ npm init
 npm install babel-core babel-preset-env browser-sync gulp gulp-babel gulp-rename gulp-vue-single-file-component --save-dev
 ```
 
-Create the following files within the directory:
+Now create the following files within the directory:
 
 `gulpfile.js`:
 
