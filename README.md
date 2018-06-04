@@ -22,9 +22,14 @@ gulp.task('vue', function() {
 
 ## Example
 
+First create an empty directory and execute the following from that directory:
+
 ```bash
+npm init
 npm install babel-core babel-preset-env browser-sync gulp gulp-babel gulp-rename gulp-vue-single-file-component --save-dev
 ```
+
+Create the following files within the directory:
 
 `gulpfile.js`:
 
@@ -186,4 +191,10 @@ var app = new Vue({
     </div>
 </body>
 </html>
+```
+
+Finally run the following to launch the application:
+
+```bash
+gulp
 ```
