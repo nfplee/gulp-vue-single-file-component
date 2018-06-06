@@ -42,14 +42,14 @@ var vueComponent    = require('gulp-vue-single-file-component');
 
 gulp.task('scripts', function() {
     return gulp.src('./js/*.js')
-        .pipe(babel({ plugins: 'transform-es2015-modules-amd' })) // Optional line which converts the component to an AMD module
+        .pipe(babel({ plugins: 'transform-es2015-modules-amd' }))
         .pipe(gulp.dest('./public/js'));
 });
 
 gulp.task('vue', function() {
     return gulp.src('./js/components/*.vue')
         .pipe(vueComponent({ debug: true, loadCssMethod: 'loadCss' }))
-        .pipe(babel({ plugins: 'transform-es2015-modules-amd' })) // Optional line which converts the component to an AMD module
+        .pipe(babel({ plugins: 'transform-es2015-modules-amd' }))
         .pipe(rename({ extname: '.js' }))
         .pipe(gulp.dest('./public/js/components'));
 });
