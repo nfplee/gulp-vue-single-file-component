@@ -31,7 +31,7 @@ npm init
 Step through the instructions and then execute:
 
 ```bash
-npm install --save-dev @babel/core @babel/preset-env @babel/plugin-transform-modules-amd browser-sync gulp gulp-babel gulp-rename gulp-vue-single-file-component
+npm install --save-dev @babel/core @babel/plugin-transform-modules-amd browser-sync gulp gulp-babel gulp-rename gulp-vue-single-file-component
 ```
 
 Now create the following files within the directory:
