@@ -48,7 +48,8 @@ var vueComponent    = require('gulp-vue-single-file-component');
 gulp.task('scripts', function() {
     return gulp.src('./js/*.js')
         .pipe(babel({ plugins: ['@babel/plugin-transform-modules-amd'] }))
-        .pipe(gulp.dest('./public/js'));
+        .pipe(gulp.dest('./public/js'))
+        .pipe(browserSync.stream());
 });
 
 gulp.task('vue', function() {
@@ -56,7 +57,8 @@ gulp.task('vue', function() {
         .pipe(vueComponent({ debug: true, loadCssMethod: 'loadCss' }))
         .pipe(babel({ plugins: ['@babel/plugin-transform-modules-amd'] }))
         .pipe(rename({ extname: '.js' }))
-        .pipe(gulp.dest('./public/js/components'));
+        .pipe(gulp.dest('./public/js/components'))
+        .pipe(browserSync.stream());
 });
 
 gulp.task('watch', function() {
@@ -65,6 +67,9 @@ gulp.task('watch', function() {
             baseDir: './public'
         }
     });
+
+    gulp.watch('./js/*.js', ['scripts']);
+    gulp.watch('./js/components/*.vue', ['vue']);
 });
 
 gulp.task('default', ['scripts', 'vue', 'watch']);
