@@ -1,5 +1,4 @@
 var fs          = require('fs');
-var gutil       = require('gulp-util');
 var less        = require('less');
 var parse5      = require('parse5');
 var sass        = require('node-sass');
@@ -38,7 +37,7 @@ module.exports = function(options) {
         }
 
         if (file.isStream()) {
-            this.emit('error', new gutil.PluginError(PLUGIN_NAME, 'Cannot use streamed files'));
+            console.log(LOG_PREFIX, 'Cannot use streamed files');
             return callback();
         }
 

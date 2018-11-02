@@ -26,7 +26,12 @@ First create an empty directory and execute the following from that directory:
 
 ```bash
 npm init
-npm install babel-core babel-preset-env browser-sync gulp gulp-babel gulp-rename gulp-vue-single-file-component --save-dev
+```
+
+Step through the instructions and then execute:
+
+```bash
+npm install --save-dev @babel/core @babel/preset-env @babel/plugin-transform-modules-amd browser-sync gulp gulp-babel gulp-rename gulp-vue-single-file-component
 ```
 
 Now create the following files within the directory:
@@ -42,14 +47,14 @@ var vueComponent    = require('gulp-vue-single-file-component');
 
 gulp.task('scripts', function() {
     return gulp.src('./js/*.js')
-        .pipe(babel({ plugins: 'transform-es2015-modules-amd' }))
+        .pipe(babel({ plugins: ['@babel/plugin-transform-modules-amd'] }))
         .pipe(gulp.dest('./public/js'));
 });
 
 gulp.task('vue', function() {
     return gulp.src('./js/components/*.vue')
         .pipe(vueComponent({ debug: true, loadCssMethod: 'loadCss' }))
-        .pipe(babel({ plugins: 'transform-es2015-modules-amd' }))
+        .pipe(babel({ plugins: ['@babel/plugin-transform-modules-amd'] }))
         .pipe(rename({ extname: '.js' }))
         .pipe(gulp.dest('./public/js/components'));
 });
