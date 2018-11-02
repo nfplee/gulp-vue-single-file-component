@@ -183,7 +183,6 @@ var app = new Vue({
                 head.appendChild(style);
             } else if (config.url) {
                 var link  = document.createElement('link');
-         
                 link.href = config.url;
                 link.rel  = 'stylesheet';
                 link.type = 'text/css';
