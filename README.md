@@ -5,7 +5,7 @@ This plugin compiles [Vue](https://vuejs.org/) single file components ([SFC](htt
 ## Installation
 
 ```bash
-npm install gulp-vue-single-file-component --save-dev
+npm install --save-dev gulp-vue-single-file-component
 ```
 
 ## Usage
