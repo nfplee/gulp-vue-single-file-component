@@ -127,7 +127,7 @@ var app = new Vue({
 
 ```html
 <template>
-    <div class="hello2">{{ greeting }} <span>{{name}}</span>!</div>
+    <div class="hello2">{{ greeting }} <span>{{ name }}</span>!</div>
 </template>
 
 <script>
