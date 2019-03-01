@@ -45,34 +45,32 @@ var browserSync     = require('browser-sync');
 var rename          = require('gulp-rename');
 var vueComponent    = require('gulp-vue-single-file-component');
 
-gulp.task('scripts', function() {
-    return gulp.src('./js/*.js')
-        .pipe(babel({ plugins: ['@babel/plugin-transform-modules-amd'] }))
-        .pipe(gulp.dest('./public/js'))
-        .pipe(browserSync.stream());
-});
+gulp.task('scripts', () => gulp.src('./js/*.js')
+    .pipe(babel({ plugins: ['@babel/plugin-transform-modules-amd'] }))
+    .pipe(gulp.dest('./public/js'))
+    .pipe(browserSync.stream())
+);
+ 
+gulp.task('vue', () => gulp.src('./js/components/*.vue')
+    .pipe(vueComponent({ debug: true, loadCssMethod: 'loadCss' }))
+    .pipe(babel({ plugins: ['@babel/plugin-transform-modules-amd'] }))
+    .pipe(rename({ extname: '.js' }))
+    .pipe(gulp.dest('./public/js/components'))
+    .pipe(browserSync.stream())
+);
 
-gulp.task('vue', function() {
-    return gulp.src('./js/components/*.vue')
-        .pipe(vueComponent({ debug: true, loadCssMethod: 'loadCss' }))
-        .pipe(babel({ plugins: ['@babel/plugin-transform-modules-amd'] }))
-        .pipe(rename({ extname: '.js' }))
-        .pipe(gulp.dest('./public/js/components'))
-        .pipe(browserSync.stream());
-});
-
-gulp.task('watch', function() {
+gulp.task('watch', () => {
     browserSync.init({
         server: {
             baseDir: './public'
         }
     });
-
-    gulp.watch('./js/*.js', ['scripts']);
-    gulp.watch('./js/components/*.vue', ['vue']);
+ 
+    gulp.watch('./js/*.js', gulp.parallel('scripts'));
+    gulp.watch('./js/components/*.vue', gulp.parallel('vue'));
 });
-
-gulp.task('default', ['scripts', 'vue', 'watch']);
+ 
+gulp.task('default', gulp.parallel('scripts', 'vue', 'watch'));
 ```
 
 `/js/app.js`:
