@@ -22,7 +22,7 @@ gulp.task('vue', function() {
 
 ## Example
 
-First create an empty directory and execute the following from that directory:
+First create an empty directory and execute the following command from within that directory:
 
 ```bash
 npm init
