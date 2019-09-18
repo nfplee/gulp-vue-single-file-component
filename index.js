@@ -96,7 +96,7 @@ module.exports = function(options) {
 
                     template = parse5.serialize(docFragment);
                     template = template.replace('<template>', '');
-                    template = template.substring(0, template.lastIndexOf('</template>'))
+                    template = template.substring(0, template.lastIndexOf('</template>'));
                 }
 
                 tagContent['template'] = minify(template.replace(/'/g, '&#39;'));
