@@ -110,7 +110,7 @@ module.exports = function(options) {
 
         // Add a beforeCreate event to load the CSS (if applicable)
         if (tagContent['style'] && !content.includes('beforeCreate()')) {
-            content = content.replace(/(export default [^{]*{)/, '$1\n		beforeCreate() {\n			' + settings.loadCssMethod + '('+ tagContent['style'] + ');\n		},');
+            content = content.replace(/(export default [^{]*{)/, '$1\n		beforeCreate() {\n			' + settings.loadCssMethod + '(' + tagContent['style'] + ');\n		},');
         }
 
         // Add the template (if applicable)
