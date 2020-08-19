@@ -2,7 +2,7 @@
 
 This plugin compiles [Vue](https://vuejs.org/) single file components ([SFC](https://vuejs.org/v2/guide/single-file-components.html)) to plain JavaScript.
 
-## Installation
+## Installing
 
 ```bash
 npm install --save-dev gulp-vue-single-file-component
