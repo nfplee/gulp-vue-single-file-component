@@ -46,9 +46,11 @@ module.exports = function(options) {
         }
         
         // Parse the the file content and get the tag content
-        var fragment = parse5.parseFragment(file.contents.toString(encoding), {
-            locationInfo: true
-        }), tagContent = [];
+        var contents = file.contents.toString(encoding),
+            fragment = parse5.parseFragment(contents, {
+                locationInfo: true
+            }),
+            tagContent = [];
         
         fragment.childNodes.forEach(function(node) {
             if (node.tagName == 'style') {
@@ -89,14 +91,15 @@ module.exports = function(options) {
                 if (include) {
                     template = fs.readFileSync(include, 'utf-8');
                 } else {
-                    var treeAdapter = parse5.treeAdapters.default,
-                        docFragment = treeAdapter.createDocumentFragment();
+                    //var treeAdapter = parse5.treeAdapters.default,
+                    //    docFragment = treeAdapter.createDocumentFragment();
+                    //treeAdapter.appendChild(docFragment, node);
+                    //template = parse5.serialize(docFragment);
+                    //template = template.replace('<template>', '');
+                    //template = template.substring(0, template.lastIndexOf('</template>'));
 
-                    treeAdapter.appendChild(docFragment, node);
-
-                    template = parse5.serialize(docFragment);
-                    template = template.replace('<template>', '');
-                    template = template.substring(0, template.lastIndexOf('</template>'));
+                    // parse5 lowercases any attributes in the template which causes problems when using scoped slots within the template
+                    template = contents.substring(contents.indexOf('<template>') + 10, contents.lastIndexOf('</template>'));
                 }
 
                 tagContent['template'] = minify(template.replace(/'/g, '&#39;'));
