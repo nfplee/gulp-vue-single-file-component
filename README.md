@@ -200,7 +200,7 @@ var app = new Vue({
 </html>
 ```
 
-Finally run the following to launch the application:
+Finally run the following command to launch the application:
 
 ```bash
 gulp
