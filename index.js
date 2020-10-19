@@ -102,7 +102,7 @@ module.exports = function(options) {
                     template = contents.substring(contents.indexOf('<template>') + 10, contents.lastIndexOf('</template>'));
                 }
 
-                tagContent['template'] = minify(template.replace(/'/g, '&#39;'));
+                tagContent['template'] = minify(template.replace(/`/g, '&#96;'));
             } else if (node.tagName === 'script') {
                 tagContent['script'] = parse5.serialize(node);
             }
@@ -118,7 +118,7 @@ module.exports = function(options) {
 
         // Add the template (if applicable)
         if (tagContent['template'] && !content.includes('template:')) {
-            content = content.replace(/(export default [^{]*{)/, '$1\n		template: \'' + tagContent['template'] + '\',');
+            content = content.replace(/(export default [^{]*{)/, '$1\n		template: `' + tagContent['template'] + '`,');
         }
 
         file.contents = new Buffer(content);
