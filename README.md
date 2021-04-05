@@ -162,7 +162,7 @@ app.mount('#app');
     <meta charset="UTF-8">
     <title>Example</title>
     <script>
-        const require = {
+        var require = {
             baseUrl: '/',
             paths: {
                 'vue': '//unpkg.com/vue@3.0.11/dist/vue.global'
@@ -175,10 +175,10 @@ app.mount('#app');
         };
         
         loadCss = function(config) {
-            const head = document.getElementsByTagName('head')[0];
+            var head = document.getElementsByTagName('head')[0];
          
             if (config.content) {
-                const style  = document.createElement('style');
+                var style  = document.createElement('style');
                 style.type = 'text/css';
                 
                 if (style.styleSheet)
@@ -188,7 +188,7 @@ app.mount('#app');
          
                 head.appendChild(style);
             } else if (config.url) {
-                const link  = document.createElement('link');
+                var link  = document.createElement('link');
                 link.href = config.url;
                 link.rel  = 'stylesheet';
                 link.type = 'text/css';
