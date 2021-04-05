@@ -76,7 +76,7 @@ gulp.task('default', gulp.parallel('scripts', 'vue', 'watch'));
 `/js/app.js`:
 
 ```javascript
-import Vue from 'vue';
+import { createApp } from 'vue';
 import Hello from './components/Hello';
 import Hello2 from './components/Hello2';
 
@@ -104,8 +104,6 @@ app.mount('#app');
 </template>
 
 <script>
-    import Vue from 'vue';
-
     export default {
         data() {
             return {
