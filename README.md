@@ -80,7 +80,7 @@ import { createApp } from 'vue';
 import Hello from './components/Hello';
 import Hello2 from './components/Hello2';
 
-var app = createApp({
+const app = createApp({
     data() {
         return {
             message: 'Hello Vue!'
@@ -162,7 +162,7 @@ app.mount('#app');
     <meta charset="UTF-8">
     <title>Example</title>
     <script>
-        var require = {
+        const require = {
             baseUrl: '/',
             paths: {
                 'vue': '//unpkg.com/vue@3.0.11/dist/vue.global'
@@ -175,10 +175,10 @@ app.mount('#app');
         };
         
         loadCss = function(config) {
-            var head = document.getElementsByTagName('head')[0];
+            const head = document.getElementsByTagName('head')[0];
          
             if (config.content) {
-                var style  = document.createElement('style');
+                const style  = document.createElement('style');
                 style.type = 'text/css';
                 
                 if (style.styleSheet)
@@ -188,7 +188,7 @@ app.mount('#app');
          
                 head.appendChild(style);
             } else if (config.url) {
-                var link  = document.createElement('link');
+                const link  = document.createElement('link');
                 link.href = config.url;
                 link.rel  = 'stylesheet';
                 link.type = 'text/css';
