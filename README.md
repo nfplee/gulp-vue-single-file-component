@@ -1,6 +1,6 @@
 # gulp-vue-single-file-component
 
-This plugin compiles [Vue](https://vuejs.org/) single file components ([SFC](https://vuejs.org/v2/guide/single-file-components.html)) to plain JavaScript.
+This plugin compiles [Vue](https://vuejs.org/) single file components ([SFC](https://v3.vuejs.org/guide/single-file-component.html#single-file-components)) to plain JavaScript.
 
 ## Installing
 
@@ -80,15 +80,20 @@ import Vue from 'vue';
 import Hello from './components/Hello';
 import Hello2 from './components/Hello2';
 
-var app = new Vue({
-    el: '#app',
-    data: {
-        message: 'Hello Vue!'
+var app = createApp({
+    data() {
+        return {
+            message: 'Hello Vue!'
+        };
     },
     components: {
         Hello2
     }
 });
+
+app.component('hello', Hello);
+
+app.mount('#app');
 ```
 
 `/js/components/hello.vue`:
@@ -101,13 +106,13 @@ var app = new Vue({
 <script>
     import Vue from 'vue';
 
-    export default Vue.component('hello', {
+    export default {
         data() {
             return {
                 greeting: 'Hello'
             }
         }
-    });
+    };
 </script>
 
 <style lang="less">
@@ -162,7 +167,12 @@ var app = new Vue({
         var require = {
             baseUrl: '/',
             paths: {
-                'vue': '//cdn.jsdelivr.net/npm/vue/dist/vue'
+                'vue': '//unpkg.com/vue@3.0.11/dist/vue.global'
+            },
+            shim: {
+                'vue': {
+                    'exports': 'Vue'
+                }
             }
         };
         
@@ -188,7 +198,7 @@ var app = new Vue({
             }
         };
     </script>
-    <script data-main="js/app" src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.js"></script>
+    <script data-main="js/app" src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.js"></script>
 </head>
 <body>
     <div id="app">

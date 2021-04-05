@@ -102,7 +102,7 @@ module.exports = function(options) {
                     template = contents.substring(contents.indexOf('<template>') + 10, contents.lastIndexOf('</template>'));
                 }
 
-                tagContent['template'] = minify(template.replace(/`/g, '&#96;'));
+                tagContent['template'] = template.replace(/`/g, '&#96;').trim();
             } else if (node.tagName === 'script') {
                 tagContent['script'] = parse5.serialize(node);
             }
