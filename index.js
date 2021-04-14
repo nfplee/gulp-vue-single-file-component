@@ -20,7 +20,9 @@ function minify(input) {
         return line.trim();
     }).filter(function(line) {
         return line != '';
-    }).join('');
+    }).join(' ') // Make sure it keeps a space (fixes https://github.com/nfplee/gulp-vue-single-file-component/issues/6)
+    .replace(/"/g, '\\"')
+    .trim();
 }
 
 module.exports = function(options) {
@@ -60,7 +62,7 @@ module.exports = function(options) {
 
                 if (lang == 'less') {
                     less.render(style, { compress: true }, function(e, result) {
-                        tagContent['style'] = '{ content: \'' + result.css + '\' }';
+                        tagContent['style'] = '{ content: "' + minify(result.css) + '" }';
                     });
                 } else if (lang == 'sass' || lang == 'scss') {
                     var options = {
@@ -76,12 +78,12 @@ module.exports = function(options) {
 
                     var result = sass.renderSync(options);
 
-                    tagContent['style'] = '{ content: \'' + result.css.toString().replace('\n', '') + '\' }';
+                    tagContent['style'] = '{ content: "' + minify(result.css.toString()) + '" }';
                 } else {
                     if (href) {
                         tagContent['style'] = '{ url: \'' + href + '\' }';
                     } else {
-                        tagContent['style'] = '{ content: \'' + minify(style) + '\' }';
+                        tagContent['style'] = '{ content: "' + minify(style) + '" }';
                     }
                 }
             } else if (node.tagName == 'template') {
@@ -102,7 +104,7 @@ module.exports = function(options) {
                     template = contents.substring(contents.indexOf('<template>') + 10, contents.lastIndexOf('</template>'));
                 }
 
-                tagContent['template'] = template.replace(/`/g, '&#96;').trim();
+                tagContent['template'] = minify(template);
             } else if (node.tagName === 'script') {
                 tagContent['script'] = parse5.serialize(node);
             }
@@ -118,7 +120,8 @@ module.exports = function(options) {
 
         // Add the template (if applicable)
         if (tagContent['template'] && !content.includes('template:')) {
-            content = content.replace(/(export default [^{]*{)/, '$1\n		template: `' + tagContent['template'] + '`,');
+            // Note: Using " intead of ` allows us to use template literals e.g. <button :id="`my-dynamic-id-${id}`">Text</button>. However we must make sure the template has removed all line breaks
+            content = content.replace(/(export default [^{]*{)/, '$1\n		template: "' + tagContent['template'] + '",');
         }
 
         file.contents = new Buffer(content);
