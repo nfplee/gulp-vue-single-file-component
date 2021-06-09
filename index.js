@@ -73,7 +73,7 @@ module.exports = function(options) {
                     if (href) {
                         options.file = href;
                     } else {
-                        options.data = minify(style);
+                        options.data = style;
                     }
 
                     var result = sass.renderSync(options);
