@@ -55,8 +55,8 @@ module.exports = function(options) {
             tagContent = [];
 
         // Work out whether the component is a petite-vue component (since petite-vue exports a function instead of an object).
-        var isPetiteVue = contents.contains('export default function');
-        
+        var isPetiteVue = contents.includes('export default function');
+
         fragment.childNodes.forEach(function(node) {
             if (node.tagName == 'style') {
                 var style = parse5.serialize(node),
@@ -123,7 +123,7 @@ module.exports = function(options) {
                     content = content.replace(/(export default [^{]*{)/, '$1\n		beforeCreate() {\n			' + settings.loadCssMethod + '(' + tagContent['style'] + ');\n		},');
                 }
             } else {
-                content = content.replace(/(export default [^{]*{)/, '$1\n		' + settings.loadCssMethod + '(' + tagContent['style'] + ');');
+                content = content.replace(/export default(.*?)return {/s, 'export default$1' + settings.loadCssMethod + '(' + tagContent['style'] + ');\n        return {');
             }
         }
 
@@ -136,7 +136,7 @@ module.exports = function(options) {
 				}
             } else {
 				if (!content.includes('$template:')) {
-					content = content.replace(/(export default [^{]*{[^{]*{)/, '$1\n            $template: "' + tagContent['template'] + '",');
+					content = content.replace(/(export default.*?return {)/s, '$1\n            $template: "' + tagContent['template'] + '",');
 				}
             }
         }
