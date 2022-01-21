@@ -55,7 +55,7 @@ module.exports = function(options) {
             tagContent = [];
 
         // Work out whether the component is a petite-vue component (since petite-vue exports a function instead of an object).
-        var isPetiteVue = contents.contains('export default function')
+        var isPetiteVue = contents.contains('export default function');
         
         fragment.childNodes.forEach(function(node) {
             if (node.tagName == 'style') {
@@ -128,12 +128,16 @@ module.exports = function(options) {
         }
 
         // Add the template (if applicable).
-        if (tagContent['template'] && !content.includes('template:')) {
+        if (tagContent['template']) {
             // Note: Using " intead of ` allows us to use template literals e.g. <button :id="`my-dynamic-id-${id}`">Text</button>. However we must make sure the template has removed all line breaks.
             if (!isPetiteVue) {
-                content = content.replace(/(export default [^{]*{)/, '$1\n		template: "' + tagContent['template'] + '",');
+				if (!content.includes('template:')) {
+					content = content.replace(/(export default [^{]*{)/, '$1\n		template: "' + tagContent['template'] + '",');
+				}
             } else {
-                content = content.replace(/(export default [^{]*{[^{]*{)/, '$1\n            $template: "' + tagContent['template'] + '",');
+				if (!content.includes('$template:')) {
+					content = content.replace(/(export default [^{]*{[^{]*{)/, '$1\n            $template: "' + tagContent['template'] + '",');
+				}
             }
         }
 
