@@ -20,7 +20,7 @@ function minify(input) {
         return line.trim();
     }).filter(function(line) {
         return line != '';
-    }).join(' ') // Make sure it keeps a space (fixes https://github.com/nfplee/gulp-vue-single-file-component/issues/6)
+    }).join(' ') // Make sure it keeps a space (fixes https://github.com/nfplee/gulp-vue-single-file-component/issues/6).
     .replace(/"/g, '\\"')
     .trim();
 }
@@ -47,12 +47,15 @@ module.exports = function(options) {
             console.log(LOG_PREFIX, 'File =>', file.path);
         }
         
-        // Parse the the file content and get the tag content
+        // Parse the the file content and get the tag content.
         var contents = file.contents.toString(encoding),
             fragment = parse5.parseFragment(contents, {
                 locationInfo: true
             }),
             tagContent = [];
+
+        // Work out whether the component is a petite-vue component (since petite-vue exports a function instead of an object).
+        var isPetiteVue = contents.contains('export default function')
         
         fragment.childNodes.forEach(function(node) {
             if (node.tagName == 'style') {
@@ -100,7 +103,7 @@ module.exports = function(options) {
                     //template = template.replace('<template>', '');
                     //template = template.substring(0, template.lastIndexOf('</template>'));
 
-                    // parse5 lowercases any attributes in the template which causes problems when using scoped slots within the template
+                    // parse5 lowercases any attributes in the template which causes problems when using scoped slots within the template.
                     template = contents.substring(contents.indexOf('<template>') + 10, contents.lastIndexOf('</template>'));
                 }
 
@@ -110,18 +113,28 @@ module.exports = function(options) {
             }
         });
         
-        // Build up the file content
+        // Build up the file content.
         var content = tagContent['script'];
 
-        // Add a beforeCreate event to load the CSS (if applicable)
-        if (tagContent['style'] && !content.includes('beforeCreate()')) {
-            content = content.replace(/(export default [^{]*{)/, '$1\n		beforeCreate() {\n			' + settings.loadCssMethod + '(' + tagContent['style'] + ');\n		},');
+        // Add a beforeCreate event to load the CSS (if applicable).
+        if (tagContent['style']) {
+            if (!isPetiteVue) {
+                if (!content.includes('beforeCreate()')) {
+                    content = content.replace(/(export default [^{]*{)/, '$1\n		beforeCreate() {\n			' + settings.loadCssMethod + '(' + tagContent['style'] + ');\n		},');
+                }
+            } else {
+                content = content.replace(/(export default [^{]*{)/, '$1\n		' + settings.loadCssMethod + '(' + tagContent['style'] + ');');
+            }
         }
 
-        // Add the template (if applicable)
+        // Add the template (if applicable).
         if (tagContent['template'] && !content.includes('template:')) {
-            // Note: Using " intead of ` allows us to use template literals e.g. <button :id="`my-dynamic-id-${id}`">Text</button>. However we must make sure the template has removed all line breaks
-            content = content.replace(/(export default [^{]*{)/, '$1\n		template: "' + tagContent['template'] + '",');
+            // Note: Using " intead of ` allows us to use template literals e.g. <button :id="`my-dynamic-id-${id}`">Text</button>. However we must make sure the template has removed all line breaks.
+            if (!isPetiteVue) {
+                content = content.replace(/(export default [^{]*{)/, '$1\n		template: "' + tagContent['template'] + '",');
+            } else {
+                content = content.replace(/(export default [^{]*{[^{]*{)/, '$1\n            $template: "' + tagContent['template'] + '",');
+            }
         }
 
         file.contents = new Buffer(content);
