@@ -38,8 +38,8 @@ function minify(input) {
  * ## Options
  * @param debug  Display verbose output when building components.
  * @param loadCssMethod  Method used to load the component's CSS within the application.
- * @param sassOptions  Options passed to `sass`. See the [`sass` docs](https://sass-lang.com/documentation/js-api/interfaces/options/).
  * @param lessOptions  Options passed to `less`. See the [`less` docs](https://lesscss.org/usage/#less-options).
+ * @param sassOptions  Options passed to `sass`. See the [`sass` docs](https://sass-lang.com/documentation/js-api/interfaces/options/).
  */
 module.exports = function(options) {
     var defaults = {
