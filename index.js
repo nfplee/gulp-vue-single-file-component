@@ -82,18 +82,18 @@ module.exports = function(options) {
                     href = getAttribute(node, 'href');
 
                 if (lang == 'less') {
-                    var options = { ...{
+                    var options = Object.assign({
                         compress: true
-                    }, ...settings.lessOptions };
+                    }, settings.lessOptions);
                     
                     less.render(style, options, function(e, result) {
                         tagContent['style'] = '{ content: "' + minify(result.css) + '" }';
                     });
                 } else if (lang == 'sass' || lang == 'scss') {
-                    var options = { ...{
+                    var options = Object.assign({
                         style: 'compressed',
                         syntax: lang == 'sass' ? 'indented' : 'scss',
-                    }, ...settings.sassOptions };
+                    }, settings.sassOptions);
                     var result;
 
                     if (href) {
