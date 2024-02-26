@@ -25,10 +25,28 @@ function minify(input) {
     .trim();
 }
 
+/**
+ * This plugin compiles Vue single file components to plain Javascript.
+ *
+ * ## Usage:
+ * ```js
+ * gulp.task('vue', function() {
+ *   return gulp.src('./js/components/*.vue')
+ *       .pipe(vueComponent({ ...options })
+ *       .pipe(gulp.dest('./dist/'));
+ * ```
+ * ## Options
+ * @param debug  Display verbose output when building components
+ * @param loadCssMethod  Method used to load the component's CSS within the application.
+ * @param sassOptions  Options passed to `sass`. See the [`sass` docs](https://sass-lang.com/documentation/js-api/interfaces/options/).
+ * @param lessOptions  Options passed to `less`. See the [`less` docs](https://lesscss.org/usage/#less-options).
+ */
 module.exports = function(options) {
     var defaults = {
         debug: false,
-        loadCssMethod: 'require.loadCss'
+        loadCssMethod: 'require.loadCss',
+        lessOptions: {},
+        sassOptions: {},
     };
 
     var settings = Object.assign({}, defaults, options);
@@ -64,14 +82,16 @@ module.exports = function(options) {
                     href = getAttribute(node, 'href');
 
                 if (lang == 'less') {
-                    less.render(style, { compress: true }, function(e, result) {
+                    var options = Object.assign({ compress: true }, settings.lessOptions)
+                    
+                    less.render(style, options, function(e, result) {
                         tagContent['style'] = '{ content: "' + minify(result.css) + '" }';
                     });
                 } else if (lang == 'sass' || lang == 'scss') {
-                    var options = {
+                    var options = Object.assign({
                         style: 'compressed',
                         syntax: lang == 'sass' ? 'indented' : 'scss',
-                    };
+                    }, settings.sassOptions);
                     var result;
 
                     if (href) {
