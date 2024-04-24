@@ -152,13 +152,13 @@ module.exports = function(options) {
         if (tagContent['template']) {
             // Note: Using " intead of ` allows us to use template literals e.g. <button :id="`my-dynamic-id-${id}`">Text</button>. However we must make sure the template has removed all line breaks.
             if (!isPetiteVue) {
-				if (!content.includes('template:')) {
-					content = content.replace(/(export default [^{]*{)/, '$1\n		template: "' + tagContent['template'] + '",');
-				}
+                if (!content.includes('template:')) {
+                    content = content.replace(/(export default [^{]*{)/, '$1\n		template: "' + tagContent['template'] + '",');
+                }
             } else {
-				if (!content.includes('$template:')) {
-					content = content.replace(/(export default.*?return {)/s, '$1\n            $template: "' + tagContent['template'] + '",');
-				}
+                if (!content.includes('$template:')) {
+                    content = content.replace(/(export default.*?return {)/s, '$1\n            $template: "' + tagContent['template'] + '",');
+                }
             }
         }
 
