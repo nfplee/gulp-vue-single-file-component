@@ -1,6 +1,6 @@
 {
   "name": "gulp-vue-single-file-component",
-  "version": "1.2.10",
+  "version": "1.2.11",
   "description": "This plugin compiles Vue single file components (SFC) to plain JavaScript.",
   "main": "index.js",
   "repository": {
@@ -18,7 +18,7 @@
   "license": "MIT",
   "dependencies": {
     "less": "^4.2.0",
-    "sass": "^1.66.1",
+    "sass": "^1.75.0",
     "parse5": "^7.1.2",
     "through2": "^4.0.2"
   }
